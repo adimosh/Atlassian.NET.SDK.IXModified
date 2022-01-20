@@ -57,7 +57,7 @@ namespace Atlassian.Jira.Remote
         /// <summary>
         /// Rest sharp client used to issue requests.
         /// </summary>
-        public RestClient RestSharpClient => _restClient;
+        internal RestClient RestSharpClient => _restClient;
 
         /// <summary>
         /// Url to the JIRA server.
@@ -134,26 +134,19 @@ namespace Atlassian.Jira.Remote
         /// <param name="url">Url to the file location.</param>
         public Task<byte[]> DownloadDataAsync(string url)
         {
-            return _restClient.DownloadDataAsync(new RestRequest(url, Method.Get));
+            return _restClient.DownloadDataAsync(new RestRequest(url));
         }
 
         private void LogRequest(RestRequest request, object body = null)
         {
             if (this._clientSettings.EnableRequestTrace)
             {
-                Trace.WriteLine(string.Format("[{0}] Request Url: {1}",
-                    request.Method,
-                    request.Resource));
+                Trace.WriteLine($"[{request.Method}] Request Url: {request.Resource}");
 
                 if (body != null)
                 {
-                    Trace.WriteLine(string.Format("[{0}] Request Data: {1}",
-                        request.Method,
-                        JsonConvert.SerializeObject(body, new JsonSerializerSettings()
-                        {
-                            Formatting = Formatting.Indented,
-                            NullValueHandling = NullValueHandling.Ignore
-                        })));
+                    Trace.WriteLine(
+                        $"[{request.Method}] Request Data: {JsonConvert.SerializeObject(body, new JsonSerializerSettings() { Formatting = Formatting.Indented, NullValueHandling = NullValueHandling.Ignore })}");
                 }
             }
         }
@@ -164,10 +157,7 @@ namespace Atlassian.Jira.Remote
 
             if (this._clientSettings.EnableRequestTrace)
             {
-                Trace.WriteLine(string.Format("[{0}] Response for Url: {1}\n{2}",
-                    request.Method,
-                    request.Resource,
-                    content));
+                Trace.WriteLine($"[{request.Method}] Response for Url: {request.Resource}\n{content}");
             }
 
             if (!string.IsNullOrEmpty(response.ErrorMessage))
