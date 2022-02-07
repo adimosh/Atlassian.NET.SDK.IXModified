@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers;
@@ -12,6 +14,7 @@ namespace Atlassian.Jira.Remote
     {
         private readonly JsonSerializer _serializer;
         private readonly NewtonsoftJsonSerializer _wrapper;
+        private SupportsContentType _supportsContentType;
 
         /// <summary>
         /// Default serializer
@@ -56,7 +59,12 @@ namespace Atlassian.Jira.Remote
 
         public IDeserializer Deserializer => this._wrapper;
 
-        public string[] SupportedContentTypes => ContentType.JsonAccept;
+        public string[] AcceptedContentTypes => ContentType.JsonAccept;
+
+        public SupportsContentType SupportsContentType =>
+            contentType => ContentType.JsonAccept.Contains(
+                contentType,
+                StringComparer.OrdinalIgnoreCase);
 
         public DataFormat DataFormat => DataFormat.Json;
 

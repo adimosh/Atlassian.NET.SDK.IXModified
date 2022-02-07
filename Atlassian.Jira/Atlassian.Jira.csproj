@@ -10,7 +10,6 @@
 		<PackageTags>Atlassian JIRA LINQ IX</PackageTags>
 		<PackageReleaseNotes>Based on 12.4.0. For change history on the original package, visit: https://bitbucket.org/farmas/atlassian.net-sdk/src/master/docs/change-history.md</PackageReleaseNotes>
 		<Description>Utilities to interact with Atlassian products. Contains LinqToJira provider for querying JIRA Issue tracker (http://www.atlassian.com/software/jira).</Description>
-		<PackageIconUrl>https://res.cloudinary.com/farmas/image/upload/v1581984204/atlassian/AtlassianIcon.png</PackageIconUrl>
 		<PackageProjectUrl>https://bitbucket.org/farmas/atlassian.net-sdk</PackageProjectUrl>
 		<PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -18,7 +17,9 @@
 		<FileVersion>$(Version)</FileVersion>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="IX.StandardExtensions" Version="0.7.19" />
+		<PackageReference Include="IX.StandardExtensions.RestSharp" Version="0.7.19" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="RestSharp" Version="107.1.1" />
+		<PackageReference Include="RestSharp" Version="107.2.1" />
 	</ItemGroup>
 </Project>

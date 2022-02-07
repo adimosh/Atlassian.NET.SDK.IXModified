@@ -29,6 +29,16 @@ namespace Atlassian.Jira
             this.Debug = false;
         }
 
+        public static Jira CreateRemoteClient(
+            string mediatorEndpoint,
+            JiraRestClientSettings settings = null)
+        {
+            settings = settings ?? new JiraRestClientSettings();
+            var restClient = new JiraRemoteRestClient(mediatorEndpoint, settings);
+
+            return CreateRestClient(restClient, settings.Cache);
+        }
+
         /// <summary>
         /// Creates a JIRA rest client.
         /// </summary>
